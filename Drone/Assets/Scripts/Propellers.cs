@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Propellers : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+// script for propellers to spin, TODO: remove script on new drone model
 
     // Update is called once per frame
     void Update()

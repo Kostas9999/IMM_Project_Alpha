@@ -18,31 +18,26 @@ public class PlayZone : MonoBehaviour
 
         gameMngr_Script = GameObject.Find("GameMngr").GetComponent<GameMngr>();
         spawnManager_Script = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        InvokeRepeating("playZone_scaler_FN", 1, 0.01f);
+
+        InvokeRepeating("playZone_scaler_FN", 1, 0.01f); // invoke resize zone repeatedly 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+      void playZone_scaler_FN()
+            {
 
-    }
+                if (transform.localScale.x > min_zone_Size && GameMngr.alive) //resize zone
+                {
+                    transform.localScale = new Vector3(
+                                                    transform.localScale.x - deduct,
+                                                    transform.localScale.x - deduct,
+                                                    transform.localScale.x - deduct
+                                                     );
+                }
+                else { 
+                    spawnManager_Script.CancelInvoke(); 
+                    if(GameMngr.alive) {gameMngr_Script.survived = true;}
+                    
+                    }
 
-    void playZone_scaler_FN()
-    {
-
-        if (transform.localScale.x > min_zone_Size && GameMngr.alive)
-        {
-            transform.localScale = new Vector3(
-                                               transform.localScale.x - deduct,
-                                               transform.localScale.x - deduct,
-                                               transform.localScale.x - deduct
-                                                );
-        }
-        else { 
-            spawnManager_Script.CancelInvoke(); 
-           if(GameMngr.alive) {gameMngr_Script.survived = true;}
-            
             }
-
-    }
 }

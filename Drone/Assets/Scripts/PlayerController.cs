@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
@@ -18,45 +13,36 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 100;
     public static bool isPaused;
     public GameObject inGameMenu;
-   public GameObject in_Game_Menu_Button;
-
-    
-
-  
+    public GameObject in_Game_Menu_Button;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         isPaused = false;
         gameMngr_Script = GameObject.Find("GameMngr").GetComponent<GameMngr>();
         drone_RB = GetComponent<Rigidbody>();
-        drone_OBJ = GameObject.Find("Drone_OBJ");
-       
-       
-       
+        drone_OBJ = GameObject.Find("Drone_OBJ"); 
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (GameMngr.alive)
+        if (GameMngr.alive)                                                     // run only if "alive"
         {
             checkedInput();
-            know_Your_Limits();
-           
+            know_Your_Limits();   
         }
 
     }
 
 
 
-    public void checkedInput()
+    public void checkedInput()                                                  // user controls
     {
         if (gameMngr_Script.timeToPlay && !gameMngr_Script.survived)
-        {                                                                       /// if alive or not paused
+        {                                                                       // if alive || not paused
 
             // forward / backward
             if (Input.GetKey(KeyCode.W))
@@ -85,7 +71,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftArrow))
             { transform.Rotate(Vector3.up * Time.deltaTime * (-turnSpeed / 2)); }
         }
-
+                                                    // TODO make movement more realistic by adding forces
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused) { resume();}
@@ -94,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void know_Your_Limits()
+    void know_Your_Limits()                                             // keep player in zone
     {
         float half_Of_playZone = playZone.transform.localScale.x / 2;
         if (drone_OBJ.CompareTag("Drone_OBJ"))
@@ -135,13 +121,14 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+                            // Pause/Resume
     public void resume()
     {
         inGameMenu.SetActive(false);
         Time.timeScale = 1;
         isPaused = false;
     }
+
     public void pause()
     {
         inGameMenu.SetActive(true);

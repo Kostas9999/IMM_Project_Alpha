@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 
 public class UI_Script : MonoBehaviour
 {
-
     public TextMeshProUGUI score_Text, time_Text, health_Text;
     public TextMeshProUGUI end_Game_Title, end_Game_Score, end_Game_Time, end_Game_Total_Score, Top_Score;
 
@@ -25,24 +22,27 @@ public class UI_Script : MonoBehaviour
     {
         update_HUD();
 
-        if (!GameMngr.alive || GameMngr_Script.survived) { update_End_Game_Pan(); }
+        if (!GameMngr.alive || GameMngr_Script.survived) { update_End_Game_Pan(); } // call for end of game panele
     }
 
 
 
     void update_HUD()
     {
-        time_Text.text = "Time: " + GameMngr_Script.time;
+        time_Text.text = "Time: " + (GameMngr_Script.time < 0 ? "0" : GameMngr_Script.time.ToString());
         score_Text.text = "Score: " + GameMngr_Script.score;
         health_Text.text = "Health: " + GameMngr_Script.health;
     }
 
     void update_End_Game_Pan()
     {
-         end_Game_Title.text = GameMngr_Script.survived ? "Survived":"Game Over";
+        end_Game_Title.text = GameMngr_Script.survived ? "Survived" : "Game Over";  // choose title
 
         end_Game_Score.text = "Score: " + GameMngr_Script.score;
+
+        if(GameMngr_Script.time < 0 ){GameMngr_Script.time = -50; }   // bonus point for suvival
         end_Game_Time.text = "Time: " + -GameMngr_Script.time;
+       
         end_Game_Total_Score.text = "Total: " + (GameMngr_Script.score + -GameMngr_Script.time);
 
         if ((GameMngr_Script.score + -GameMngr_Script.time) > GameMngr.TopScore)
